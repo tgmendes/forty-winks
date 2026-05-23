@@ -401,80 +401,6 @@
 // ─────────────────────────────────────────────────────
 const BOOKS = [
   {
-    id: 'your-baby-week-by-week',
-    title: 'Your Baby: Week by Week',
-    author: 'Simone Cave & Caroline Fertleman',
-    initials: 'YB',
-    cover: 'cover-blue',
-    tags: ['newborn', 'reference'],
-    about: 'A week-by-week handbook for the first six months &mdash; what to expect and what to do, in plain language.',
-    synopsis: 'Co-authored by a paediatrician (Fertleman) and a journalist (Cave), this UK-published guide walks parents through each of the first 26 weeks. Each chapter covers feeding, sleeping, crying, milestones, and the common worries that come up at that age. The tone is reassuring and the format is practical rather than theoretical &mdash; you read the week you\'re in, not the whole book.',
-    whyItHelps: 'It quietly defuses the constant "is this normal?" anxiety. When you can flip to "Week 6" and see that yes, this is the fussy peak and yes, the sleep gets a little better next week, the chaos feels less random.',
-    links: [],
-    review: {
-      bestFor: 'Knowing what to expect each week and how to handle it.',
-      liked: [
-        'Very easy to read &mdash; quick, digestible chapters for each week',
-        'Never feels overwhelming'
-      ],
-      disliked: [
-        'Doesn\'t go into much depth on any one topic'
-      ],
-      verdict: 'Recommended to me by my dentist, and it\'s a book I\'d happily pass on too.',
-      recommend: 'yes'
-    }
-  },
-  {
-    id: 'expecting-better',
-    title: 'Expecting Better',
-    author: 'Emily Oster',
-    initials: 'EB',
-    cover: 'cover-rose',
-    tags: ['pregnancy'],
-    about: 'An economist re-examines the conventional rules of pregnancy using the actual evidence.',
-    synopsis: 'Oster, a Brown University economist, found that many of the things she was told to avoid during her own pregnancy weren\'t backed by strong data &mdash; so she went and read the studies. The book covers caffeine, alcohol, deli meat, prenatal testing, exercise, and birth choices, walking through what the research actually says (and what it doesn\'t). The point is informed decision-making, not rule-breaking.',
-    whyItHelps: 'It replaces vague folk wisdom and one-size-fits-all warnings with the actual evidence base. You walk into doctor\'s appointments and partner conversations with better questions and a clearer sense of your own risk tolerance.',
-    links: [
-      { url: 'https://emilyoster.net/books/', label: 'Author site' }
-    ],
-    review: {
-      bestFor: 'Parents who want data-informed decisions during pregnancy &mdash; with surprisingly useful tips for birthing too.',
-      liked: [
-        'A lot of useful information and myth-debunking',
-        'References to multiple studies, plenty of data backing every claim'
-      ],
-      disliked: [],
-      verdict: 'Definitely recommend &mdash; even if you\'re already well into the pregnancy.',
-      recommend: 'yes'
-    }
-  },
-  {
-    id: 'crib-sheet',
-    title: 'Crib Sheet',
-    author: 'Emily Oster',
-    initials: 'CS',
-    cover: 'cover-purple',
-    tags: ['newborn', 'sleep', 'reference'],
-    about: 'The same data-driven approach as <em>Expecting Better</em>, now for the first three years.',
-    synopsis: 'Oster turns her economist\'s lens on the most loaded debates of early parenting: breast vs. formula, sleep training, co-sleeping, daycare, screen time, vaccines, language development, potty training. She surveys the research without taking sides, then helps you weigh trade-offs that fit your family\'s situation.',
-    whyItHelps: 'It cuts through parenting dogma. If you\'ve ever felt judged for a choice (or unsure of one), this gives you the evidence to feel confident either way &mdash; and lets you stop arguing with the internet.',
-    links: [
-      { url: 'https://emilyoster.net/books/', label: 'Author site' }
-    ],
-    review: {
-      bestFor: 'Data-driven facts and advice for your baby\'s first years.',
-      liked: [
-        'Concise and clear',
-        'Good information across a wide range of topics'
-      ],
-      disliked: [
-        'Doesn\'t cover everything in detail &mdash; more a survey than a deep dive'
-      ],
-      verdict: 'A good book, but not a must-read &mdash; pick it up after the essentials.',
-      recommend: 'with-caveats'
-    }
-  },
-  {
     id: 'healthy-sleep-habits-happy-child',
     title: 'Healthy Sleep Habits, Happy Child',
     author: 'Marc Weissbluth, MD',
@@ -484,7 +410,9 @@ const BOOKS = [
     about: 'A paediatrician\'s deep theory of how infant sleep works &mdash; and how to protect it.',
     synopsis: 'Weissbluth treated sleep-troubled children for over four decades; this book is his accumulated wisdom. It\'s long, dense, and goes deep on sleep architecture, the biological cost of overtiredness, age-appropriate schedules, and the case for letting babies learn to fall asleep independently. The structure rewards skimming &mdash; read the chapter for your baby\'s age.',
     whyItHelps: 'It gives you the <em>why</em> behind every sleep rule of thumb. Once you understand sleep cycles, wake windows, and the overtiredness paradox, every other piece of advice you read makes more sense (and you can spot the bad advice faster).',
-    links: [],
+    links: [
+      { url: 'https://uk.bookshop.org/search?keywords=healthy+sleep+habits+happy+child+weissbluth', label: 'Find on Bookshop' }
+    ],
     review: {
       bestFor: 'Knowing the whole picture of baby sleep and what to do at every stage.',
       liked: [
@@ -509,7 +437,8 @@ const BOOKS = [
     synopsis: 'Karp\'s premise: human babies are born about three months too early, and the first 12 weeks are a "fourth trimester" requiring womb-like soothing. The 5 S\'s &mdash; Swaddle, Side/Stomach hold, Shush, Swing, Suck &mdash; activate an in-built calming reflex when layered together. The book is short, focused, and immediately actionable.',
     whyItHelps: 'It gives you concrete, testable techniques for the hardest weeks of your life. When your newborn won\'t stop crying at 2 AM, you have a sequence to run instead of just panic.',
     links: [
-      { url: 'https://www.happiestbaby.com/', label: 'happiestbaby.com' }
+      { url: 'https://www.happiestbaby.com/', label: 'happiestbaby.com' },
+      { url: 'https://uk.bookshop.org/search?keywords=happiest+baby+on+the+block+karp', label: 'Find on Bookshop' }
     ],
     review: {
       bestFor: 'More strategies for soothing and helping your baby sleep better.',
@@ -524,6 +453,110 @@ const BOOKS = [
     }
   },
   {
+    id: 'expecting-better',
+    title: 'Expecting Better',
+    author: 'Emily Oster',
+    initials: 'EB',
+    cover: 'cover-rose',
+    tags: ['pregnancy'],
+    about: 'An economist re-examines the conventional rules of pregnancy using the actual evidence.',
+    synopsis: 'Oster, a Brown University economist, found that many of the things she was told to avoid during her own pregnancy weren\'t backed by strong data &mdash; so she went and read the studies. The book covers caffeine, alcohol, deli meat, prenatal testing, exercise, and birth choices, walking through what the research actually says (and what it doesn\'t). The point is informed decision-making, not rule-breaking.',
+    whyItHelps: 'It replaces vague folk wisdom and one-size-fits-all warnings with the actual evidence base. You walk into doctor\'s appointments and partner conversations with better questions and a clearer sense of your own risk tolerance.',
+    links: [
+      { url: 'https://emilyoster.net/books/', label: 'Author site' },
+      { url: 'https://uk.bookshop.org/search?keywords=expecting+better+emily+oster', label: 'Find on Bookshop' }
+    ],
+    review: {
+      bestFor: 'Parents who want data-informed decisions during pregnancy &mdash; with surprisingly useful tips for birthing too.',
+      liked: [
+        'A lot of useful information and myth-debunking',
+        'References to multiple studies, plenty of data backing every claim'
+      ],
+      disliked: [],
+      verdict: 'Definitely recommend &mdash; even if you\'re already well into the pregnancy.',
+      recommend: 'yes'
+    }
+  },
+  {
+    id: 'your-baby-week-by-week',
+    title: 'Your Baby: Week by Week',
+    author: 'Simone Cave & Caroline Fertleman',
+    initials: 'YB',
+    cover: 'cover-blue',
+    tags: ['newborn', 'reference'],
+    about: 'A week-by-week handbook for the first six months &mdash; what to expect and what to do, in plain language.',
+    synopsis: 'Co-authored by a paediatrician (Fertleman) and a journalist (Cave), this UK-published guide walks parents through each of the first 26 weeks. Each chapter covers feeding, sleeping, crying, milestones, and the common worries that come up at that age. The tone is reassuring and the format is practical rather than theoretical &mdash; you read the week you\'re in, not the whole book.',
+    whyItHelps: 'It quietly defuses the constant "is this normal?" anxiety. When you can flip to "Week 6" and see that yes, this is the fussy peak and yes, the sleep gets a little better next week, the chaos feels less random.',
+    links: [
+      { url: 'https://uk.bookshop.org/search?keywords=your+baby+week+by+week+cave+fertleman', label: 'Find on Bookshop' }
+    ],
+    review: {
+      bestFor: 'Knowing what to expect each week and how to handle it.',
+      liked: [
+        'Very easy to read &mdash; quick, digestible chapters for each week',
+        'Never feels overwhelming'
+      ],
+      disliked: [
+        'Doesn\'t go into much depth on any one topic'
+      ],
+      verdict: 'Recommended to me by my dentist, and it\'s a book I\'d happily pass on too.',
+      recommend: 'yes'
+    }
+  },
+  {
+    id: 'crib-sheet',
+    title: 'Crib Sheet',
+    author: 'Emily Oster',
+    initials: 'CS',
+    cover: 'cover-purple',
+    tags: ['newborn', 'sleep', 'reference'],
+    about: 'The same data-driven approach as <em>Expecting Better</em>, now for the first three years.',
+    synopsis: 'Oster turns her economist\'s lens on the most loaded debates of early parenting: breast vs. formula, sleep training, co-sleeping, daycare, screen time, vaccines, language development, potty training. She surveys the research without taking sides, then helps you weigh trade-offs that fit your family\'s situation.',
+    whyItHelps: 'It cuts through parenting dogma. If you\'ve ever felt judged for a choice (or unsure of one), this gives you the evidence to feel confident either way &mdash; and lets you stop arguing with the internet.',
+    links: [
+      { url: 'https://emilyoster.net/books/', label: 'Author site' },
+      { url: 'https://uk.bookshop.org/search?keywords=crib+sheet+emily+oster', label: 'Find on Bookshop' }
+    ],
+    review: {
+      bestFor: 'Data-driven facts and advice for your baby\'s first years.',
+      liked: [
+        'Concise and clear',
+        'Good information across a wide range of topics'
+      ],
+      disliked: [
+        'Doesn\'t cover everything in detail &mdash; more a survey than a deep dive'
+      ],
+      verdict: 'A good book, but not a must-read &mdash; pick it up after the essentials.',
+      recommend: 'with-caveats'
+    }
+  },
+  {
+    id: 'what-to-expect-when-youre-expecting',
+    title: 'What to Expect When You\'re Expecting',
+    author: 'Heidi Murkoff',
+    initials: 'WE',
+    cover: 'cover-gold',
+    tags: ['pregnancy', 'reference'],
+    about: 'The classic month-by-month pregnancy reference, refined across many editions.',
+    synopsis: 'Probably the most widely read pregnancy book in English. It covers every month of pregnancy plus the first six weeks postpartum, with comprehensive Q&amp;A sections, symptom guides, and advice on everything from nutrition to childbirth choices. Critics find it conservative or anxiety-inducing in tone; fans find it indispensable.',
+    whyItHelps: 'It\'s the safety net. When you have a weird question or a strange symptom at midnight, the answer is almost certainly somewhere in this book, written calmly.',
+    links: [
+      { url: 'https://www.whattoexpect.com/', label: 'whattoexpect.com' },
+      { url: 'https://uk.bookshop.org/search?keywords=what+to+expect+when+youre+expecting+murkoff', label: 'Find on Bookshop' }
+    ],
+    review: {
+      bestFor: 'Knowing what to expect during pregnancy.',
+      liked: [
+        'Good month-by-month description of pregnancy'
+      ],
+      disliked: [
+        'More useful as a troubleshooting reference than as an end-to-end read'
+      ],
+      verdict: 'Good, but not a must-have &mdash; treat it as a lookup rather than a cover-to-cover read.',
+      recommend: 'with-caveats'
+    }
+  },
+  {
     id: 'precious-little-sleep',
     title: 'Precious Little Sleep',
     author: 'Alexis Dubief',
@@ -534,7 +567,8 @@ const BOOKS = [
     synopsis: 'Dubief is blunt, funny, and meets parents where they are. The book covers newborn survival, the 4-month sleep regression, every common sleep training method with realistic pros/cons, nap troubleshooting, schedules, and the special-case troubles (reflux, early rising, pacifier dependency, room-sharing). It reads like a friend who\'s been through it and isn\'t precious about it.',
     whyItHelps: 'It\'s the troubleshooting manual you\'ll actually open at 3 AM. Practical, modern, respects that every family is different, and doesn\'t shame you for the choices you make.',
     links: [
-      { url: 'https://www.preciouslittlesleep.com/', label: 'preciouslittlesleep.com' }
+      { url: 'https://www.preciouslittlesleep.com/', label: 'preciouslittlesleep.com' },
+      { url: 'https://uk.bookshop.org/search?keywords=precious+little+sleep+dubief', label: 'Find on Bookshop' }
     ],
     review: {
       bestFor: 'Extra perspective on baby sleep if the other sleep books didn\'t click for you.',
@@ -550,31 +584,6 @@ const BOOKS = [
     }
   },
   {
-    id: 'what-to-expect-when-youre-expecting',
-    title: 'What to Expect When You\'re Expecting',
-    author: 'Heidi Murkoff',
-    initials: 'WE',
-    cover: 'cover-gold',
-    tags: ['pregnancy', 'reference'],
-    about: 'The classic month-by-month pregnancy reference, refined across many editions.',
-    synopsis: 'Probably the most widely read pregnancy book in English. It covers every month of pregnancy plus the first six weeks postpartum, with comprehensive Q&amp;A sections, symptom guides, and advice on everything from nutrition to childbirth choices. Critics find it conservative or anxiety-inducing in tone; fans find it indispensable.',
-    whyItHelps: 'It\'s the safety net. When you have a weird question or a strange symptom at midnight, the answer is almost certainly somewhere in this book, written calmly.',
-    links: [
-      { url: 'https://www.whattoexpect.com/', label: 'whattoexpect.com' }
-    ],
-    review: {
-      bestFor: 'Knowing what to expect during pregnancy.',
-      liked: [
-        'Good month-by-month description of pregnancy'
-      ],
-      disliked: [
-        'More useful as a troubleshooting reference than as an end-to-end read'
-      ],
-      verdict: 'Good, but not a must-have &mdash; treat it as a lookup rather than a cover-to-cover read.',
-      recommend: 'with-caveats'
-    }
-  },
-  {
     id: 'mayo-clinic-baby-first-years',
     title: 'Mayo Clinic Guide to Your Baby\'s First Years',
     author: 'Mayo Clinic',
@@ -584,7 +593,9 @@ const BOOKS = [
     about: 'A medical reference for years 0&ndash;3 from one of the most respected hospitals in the US.',
     synopsis: 'Organised in two halves: the first walks month-by-month through growth, development, feeding, and care; the second is an A&ndash;Z reference for health concerns &mdash; fevers, rashes, when to call the doctor, common illnesses. Conservative, factual, and free of trend-driven advice.',
     whyItHelps: 'It\'s your at-home medical reference. When something looks off &mdash; a rash, an unfamiliar cry, a worrying symptom &mdash; this tells you whether to wait, call your paediatrician, or go in.',
-    links: [],
+    links: [
+      { url: 'https://uk.bookshop.org/search?keywords=mayo+clinic+guide+baby+first+years', label: 'Find on Bookshop' }
+    ],
     review: {
       bestFor: 'A broad overview of caring for a baby in the first years.',
       liked: [
