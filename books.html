@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Books I Read — Forty Winks</title>
+<style>
+  /* ── Reset & Base ───────────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:        #0f1129;
+    --bg-card:   #181c3a;
+    --bg-card2:  #1f2347;
+    --surface:   #262b54;
+    --border:    #2e3461;
+    --text:      #e8e6f0;
+    --text-dim:  #9b97b8;
+    --accent:    #c4a0ff;
+    --accent2:   #7b8cff;
+    --gold:      #ffd07a;
+    --warm:      #ffb07a;
+    --success:   #7adca0;
+    --danger:    #ff8a8a;
+    --radius:    16px;
+    --radius-sm: 10px;
+    --shadow:    0 4px 24px rgba(0,0,0,.35);
+    --max-w:     780px;
+    --nav-h:     64px;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: calc(var(--nav-h) + 16px);
+  }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    font-size: 17px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container { max-width: var(--max-w); margin: 0 auto; padding: 0 20px; }
+
+  /* ── Navigation ─────────────────────────────────────── */
+  .top-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    height: var(--nav-h);
+    display: flex; align-items: center;
+  }
+  .top-nav .container {
+    display: flex; align-items: center; justify-content: space-between; width: 100%;
+  }
+  .nav-logo {
+    font-size: 18px; font-weight: 700; color: var(--gold);
+    display: flex; align-items: center; gap: 8px;
+    text-decoration: none;
+  }
+  .nav-logo span { font-size: 22px; }
+  .nav-links { display: flex; gap: 4px; }
+  .nav-links a {
+    color: var(--text-dim); text-decoration: none;
+    font-size: 13px; font-weight: 500;
+    padding: 6px 12px; border-radius: 8px;
+    transition: all .2s;
+  }
+  .nav-links a:hover { color: var(--text); background: var(--surface); }
+  .nav-links a[aria-current="page"] { color: var(--text); background: var(--surface); }
+
+  /* ── Hero ────────────────────────────────────────────── */
+  .hero {
+    text-align: center;
+    padding: 60px 20px 32px;
+  }
+  .hero-icon {
+    font-size: 56px;
+    margin-bottom: 16px;
+    display: inline-block;
+    filter: drop-shadow(0 0 24px rgba(255,208,122,.3));
+  }
+  .hero h1 {
+    font-size: clamp(28px, 6vw, 42px);
+    font-weight: 800;
+    line-height: 1.15;
+    color: #fff;
+    margin-bottom: 12px;
+  }
+  .hero h1 em {
+    font-style: normal;
+    background: linear-gradient(135deg, var(--gold), var(--warm));
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero p {
+    color: var(--text-dim);
+    font-size: 16px; max-width: 560px; margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  /* ── Filter chips ───────────────────────────────────── */
+  .filter-wrap { padding: 8px 20px 24px; }
+  .filter {
+    max-width: var(--max-w); margin: 0 auto;
+    display: flex; flex-wrap: wrap; gap: 8px;
+    justify-content: center;
+  }
+  .filter-btn {
+    padding: 8px 16px;
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    background: var(--bg-card);
+    color: var(--text-dim);
+    font-size: 13px; font-weight: 600;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .filter-btn:hover { border-color: var(--accent); color: var(--text); }
+  .filter-btn.active {
+    background: linear-gradient(135deg, rgba(196,160,255,.2), rgba(123,140,255,.15));
+    border-color: var(--accent);
+    color: #fff;
+  }
+
+  /* ── Book Card ──────────────────────────────────────── */
+  .book {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+    transition: border-color .3s, transform .2s;
+  }
+  .book:hover { border-color: rgba(196,160,255,.25); }
+  .book.hidden { display: none; }
+
+  .book-header {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    margin-bottom: 16px;
+  }
+  .book-cover {
+    flex-shrink: 0;
+    width: 64px; height: 88px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; font-weight: 800;
+    color: rgba(255,255,255,.92);
+    letter-spacing: 1px;
+    box-shadow: 0 4px 12px rgba(0,0,0,.4);
+    border: 1px solid rgba(255,255,255,.08);
+  }
+  .cover-purple { background: linear-gradient(135deg, #7b3fbf, #c4a0ff); }
+  .cover-blue   { background: linear-gradient(135deg, #2a4fbf, #7b8cff); }
+  .cover-gold   { background: linear-gradient(135deg, #b8731f, #ffd07a); }
+  .cover-warm   { background: linear-gradient(135deg, #c44a2a, #ffb07a); }
+  .cover-green  { background: linear-gradient(135deg, #2d8a5a, #7adca0); }
+  .cover-rose   { background: linear-gradient(135deg, #b03a6a, #ff8aae); }
+  .cover-teal   { background: linear-gradient(135deg, #1f6b7a, #5fc8d8); }
+  .cover-indigo { background: linear-gradient(135deg, #3a3f8f, #8b92e0); }
+
+  .book-meta { flex: 1; min-width: 0; }
+  .book-title {
+    font-size: 19px; font-weight: 700;
+    color: #fff; line-height: 1.25;
+    margin-bottom: 4px;
+  }
+  .book-author {
+    font-size: 14px; color: var(--text-dim);
+    margin-bottom: 8px;
+  }
+  .book-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag {
+    font-size: 11px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .5px;
+    padding: 3px 9px; border-radius: 100px;
+    background: rgba(196,160,255,.1);
+    color: var(--accent);
+    border: 1px solid rgba(196,160,255,.15);
+  }
+  .tag-pregnancy { background: rgba(255,138,174,.1); color: #ff8aae; border-color: rgba(255,138,174,.15); }
+  .tag-newborn   { background: rgba(255,208,122,.1); color: var(--gold); border-color: rgba(255,208,122,.15); }
+  .tag-sleep     { background: rgba(123,140,255,.1); color: var(--accent2); border-color: rgba(123,140,255,.15); }
+  .tag-reference { background: rgba(122,220,160,.1); color: var(--success); border-color: rgba(122,220,160,.15); }
+
+  .rec-badge {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 11px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .5px;
+    padding: 3px 9px; border-radius: 100px;
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+  .rec-yes      { background: rgba(122,220,160,.12); color: var(--success); border: 1px solid rgba(122,220,160,.2); }
+  .rec-caveats  { background: rgba(255,208,122,.12); color: var(--gold);    border: 1px solid rgba(255,208,122,.2); }
+  .rec-no       { background: rgba(255,138,138,.12); color: var(--danger);  border: 1px solid rgba(255,138,138,.2); }
+  .rec-pending  { background: var(--surface);        color: var(--text-dim); border: 1px solid var(--border); }
+
+  /* ── About line ─────────────────────────────────────── */
+  .book-about {
+    font-size: 15px;
+    color: var(--text);
+    line-height: 1.6;
+    margin-bottom: 16px;
+    padding: 12px 14px;
+    background: var(--bg-card2);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  }
+  .book-about strong {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+
+  /* ── Expandable Blocks ──────────────────────────────── */
+  .expand-block { margin-bottom: 8px; }
+  .expand-toggle {
+    width: 100%;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 14px;
+    background: var(--bg-card2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text);
+    font-size: 14px; font-weight: 600;
+    cursor: pointer;
+    transition: all .2s;
+    text-align: left;
+  }
+  .expand-toggle:hover { background: var(--surface); }
+  .expand-toggle .chevron {
+    transition: transform .3s;
+    color: var(--text-dim);
+    font-size: 11px;
+  }
+  .expand-block.open .expand-toggle { border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
+  .expand-block.open .chevron { transform: rotate(180deg); }
+  .expand-body {
+    display: none;
+    padding: 14px 16px 16px;
+    background: var(--bg-card2);
+    border: 1px solid var(--border);
+    border-top: none;
+    border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--text);
+  }
+  .expand-block.open .expand-body { display: block; }
+
+  /* ── My take styling ────────────────────────────────── */
+  .take-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .take-row { }
+  .take-label {
+    font-size: 11px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1px;
+    color: var(--accent);
+    margin-bottom: 6px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .take-row ul {
+    list-style: none; padding: 0;
+  }
+  .take-row li {
+    position: relative;
+    padding: 4px 0 4px 18px;
+    font-size: 15px;
+    line-height: 1.55;
+  }
+  .take-row li::before {
+    content: '';
+    position: absolute; left: 2px; top: 12px;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    opacity: .6;
+  }
+  .take-liked .take-label { color: var(--success); }
+  .take-liked li::before { background: var(--success); }
+  .take-disliked .take-label { color: var(--warm); }
+  .take-disliked li::before { background: var(--warm); }
+
+  .take-pending {
+    padding: 16px;
+    border: 1px dashed var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text-dim);
+    font-size: 14px;
+    text-align: center;
+    font-style: italic;
+  }
+  .take-pending strong { color: var(--gold); font-style: normal; }
+
+  /* ── Links row ──────────────────────────────────────── */
+  .book-links {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    margin-top: 16px;
+  }
+  .book-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 13px; font-weight: 600;
+    color: var(--accent);
+    text-decoration: none;
+    padding: 8px 14px;
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    background: var(--bg-card2);
+    transition: all .2s;
+  }
+  .book-link:hover {
+    border-color: var(--accent);
+    background: var(--surface);
+  }
+  .book-link::after { content: '\2192'; }
+
+  /* ── Footer ─────────────────────────────────────────── */
+  .footer {
+    text-align: center;
+    padding: 48px 20px 32px;
+    color: var(--text-dim);
+    font-size: 13px;
+    line-height: 1.7;
+  }
+  .footer a { color: var(--accent); text-decoration: none; }
+  .footer-heart { color: var(--warm); }
+
+  /* ── Responsive ─────────────────────────────────────── */
+  @media (max-width: 600px) {
+    body { font-size: 16px; }
+    .nav-links a { font-size: 12px; padding: 6px 10px; }
+    .hero { padding: 40px 16px 24px; }
+    .book { padding: 20px 18px; }
+    .book-cover { width: 56px; height: 76px; font-size: 18px; }
+    .book-header { gap: 14px; }
+    .rec-badge { margin-left: 0; margin-top: 6px; }
+    .book-tags { flex-wrap: wrap; }
+  }
+
+  /* ── Scroll fade-in ─────────────────────────────────── */
+  .fade-in { opacity: 0; transform: translateY(12px); transition: opacity .5s ease, transform .5s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<nav class="top-nav">
+  <div class="container">
+    <a href="index.html" class="nav-logo"><span>&#9790;</span> Forty Winks</a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="sleep.html">Sleep</a>
+      <a href="books.html" aria-current="page">Books</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <span class="hero-icon">&#128218;</span>
+  <h1>Books That <em>Helped</em></h1>
+  <p>The pregnancy and baby books I actually finished &mdash; and what I'd tell another tired parent about each one.</p>
+</header>
+
+<div class="filter-wrap">
+  <div class="filter" id="filter">
+    <button class="filter-btn active" data-tag="all">All</button>
+    <button class="filter-btn" data-tag="pregnancy">Pregnancy</button>
+    <button class="filter-btn" data-tag="newborn">Newborn</button>
+    <button class="filter-btn" data-tag="sleep">Sleep</button>
+    <button class="filter-btn" data-tag="reference">Reference</button>
+  </div>
+</div>
+
+<main class="container" id="book-list">
+  <!-- Books render here -->
+</main>
+
+<footer class="footer">
+  <p>Made with <span class="footer-heart">&#9829;</span> for tired parents everywhere</p>
+  <p style="margin-top:8px;opacity:.7">Reviews are my personal opinion. Affiliate-free.</p>
+</footer>
+
+<script>
+// ─────────────────────────────────────────────────────
+// EDIT BOOK DATA HERE.
+// To add a review, fill in the `review` object for that book.
+// Set `recommend` to 'yes' | 'with-caveats' | 'no' | '' (empty = pending).
+// ─────────────────────────────────────────────────────
+const BOOKS = [
+  {
+    id: 'your-baby-week-by-week',
+    title: 'Your Baby: Week by Week',
+    author: 'Simone Cave & Caroline Fertleman',
+    initials: 'YB',
+    cover: 'cover-blue',
+    tags: ['newborn', 'reference'],
+    about: 'A week-by-week handbook for the first six months &mdash; what to expect and what to do, in plain language.',
+    synopsis: 'Co-authored by a paediatrician (Fertleman) and a journalist (Cave), this UK-published guide walks parents through each of the first 26 weeks. Each chapter covers feeding, sleeping, crying, milestones, and the common worries that come up at that age. The tone is reassuring and the format is practical rather than theoretical &mdash; you read the week you\'re in, not the whole book.',
+    whyItHelps: 'It quietly defuses the constant "is this normal?" anxiety. When you can flip to "Week 6" and see that yes, this is the fussy peak and yes, the sleep gets a little better next week, the chaos feels less random.',
+    links: [],
+    review: null
+  },
+  {
+    id: 'expecting-better',
+    title: 'Expecting Better',
+    author: 'Emily Oster',
+    initials: 'EB',
+    cover: 'cover-rose',
+    tags: ['pregnancy'],
+    about: 'An economist re-examines the conventional rules of pregnancy using the actual evidence.',
+    synopsis: 'Oster, a Brown University economist, found that many of the things she was told to avoid during her own pregnancy weren\'t backed by strong data &mdash; so she went and read the studies. The book covers caffeine, alcohol, deli meat, prenatal testing, exercise, and birth choices, walking through what the research actually says (and what it doesn\'t). The point is informed decision-making, not rule-breaking.',
+    whyItHelps: 'It replaces vague folk wisdom and one-size-fits-all warnings with the actual evidence base. You walk into doctor\'s appointments and partner conversations with better questions and a clearer sense of your own risk tolerance.',
+    links: [
+      { url: 'https://emilyoster.net/books/', label: 'Author site' }
+    ],
+    review: null
+  },
+  {
+    id: 'crib-sheet',
+    title: 'Crib Sheet',
+    author: 'Emily Oster',
+    initials: 'CS',
+    cover: 'cover-purple',
+    tags: ['newborn', 'sleep', 'reference'],
+    about: 'The same data-driven approach as <em>Expecting Better</em>, now for the first three years.',
+    synopsis: 'Oster turns her economist\'s lens on the most loaded debates of early parenting: breast vs. formula, sleep training, co-sleeping, daycare, screen time, vaccines, language development, potty training. She surveys the research without taking sides, then helps you weigh trade-offs that fit your family\'s situation.',
+    whyItHelps: 'It cuts through parenting dogma. If you\'ve ever felt judged for a choice (or unsure of one), this gives you the evidence to feel confident either way &mdash; and lets you stop arguing with the internet.',
+    links: [
+      { url: 'https://emilyoster.net/books/', label: 'Author site' }
+    ],
+    review: null
+  },
+  {
+    id: 'healthy-sleep-habits-happy-child',
+    title: 'Healthy Sleep Habits, Happy Child',
+    author: 'Marc Weissbluth, MD',
+    initials: 'HS',
+    cover: 'cover-indigo',
+    tags: ['sleep'],
+    about: 'A paediatrician\'s deep theory of how infant sleep works &mdash; and how to protect it.',
+    synopsis: 'Weissbluth treated sleep-troubled children for over four decades; this book is his accumulated wisdom. It\'s long, dense, and goes deep on sleep architecture, the biological cost of overtiredness, age-appropriate schedules, and the case for letting babies learn to fall asleep independently. The structure rewards skimming &mdash; read the chapter for your baby\'s age.',
+    whyItHelps: 'It gives you the <em>why</em> behind every sleep rule of thumb. Once you understand sleep cycles, wake windows, and the overtiredness paradox, every other piece of advice you read makes more sense (and you can spot the bad advice faster).',
+    links: [],
+    review: null
+  },
+  {
+    id: 'happiest-baby-on-the-block',
+    title: 'The Happiest Baby on the Block',
+    author: 'Harvey Karp, MD',
+    initials: 'HB',
+    cover: 'cover-warm',
+    tags: ['newborn', 'sleep'],
+    about: 'A paediatrician\'s "5 S\'s" method for calming newborns and helping them sleep.',
+    synopsis: 'Karp\'s premise: human babies are born about three months too early, and the first 12 weeks are a "fourth trimester" requiring womb-like soothing. The 5 S\'s &mdash; Swaddle, Side/Stomach hold, Shush, Swing, Suck &mdash; activate an in-built calming reflex when layered together. The book is short, focused, and immediately actionable.',
+    whyItHelps: 'It gives you concrete, testable techniques for the hardest weeks of your life. When your newborn won\'t stop crying at 2 AM, you have a sequence to run instead of just panic.',
+    links: [
+      { url: 'https://www.happiestbaby.com/', label: 'happiestbaby.com' }
+    ],
+    review: null
+  },
+  {
+    id: 'precious-little-sleep',
+    title: 'Precious Little Sleep',
+    author: 'Alexis Dubief',
+    initials: 'PL',
+    cover: 'cover-teal',
+    tags: ['sleep'],
+    about: 'A funny, no-nonsense, evidence-based playbook for getting your baby to sleep.',
+    synopsis: 'Dubief is blunt, funny, and meets parents where they are. The book covers newborn survival, the 4-month sleep regression, every common sleep training method with realistic pros/cons, nap troubleshooting, schedules, and the special-case troubles (reflux, early rising, pacifier dependency, room-sharing). It reads like a friend who\'s been through it and isn\'t precious about it.',
+    whyItHelps: 'It\'s the troubleshooting manual you\'ll actually open at 3 AM. Practical, modern, respects that every family is different, and doesn\'t shame you for the choices you make.',
+    links: [
+      { url: 'https://www.preciouslittlesleep.com/', label: 'preciouslittlesleep.com' }
+    ],
+    review: null
+  },
+  {
+    id: 'what-to-expect-when-youre-expecting',
+    title: 'What to Expect When You\'re Expecting',
+    author: 'Heidi Murkoff',
+    initials: 'WE',
+    cover: 'cover-gold',
+    tags: ['pregnancy', 'reference'],
+    about: 'The classic month-by-month pregnancy reference, refined across many editions.',
+    synopsis: 'Probably the most widely read pregnancy book in English. It covers every month of pregnancy plus the first six weeks postpartum, with comprehensive Q&amp;A sections, symptom guides, and advice on everything from nutrition to childbirth choices. Critics find it conservative or anxiety-inducing in tone; fans find it indispensable.',
+    whyItHelps: 'It\'s the safety net. When you have a weird question or a strange symptom at midnight, the answer is almost certainly somewhere in this book, written calmly.',
+    links: [
+      { url: 'https://www.whattoexpect.com/', label: 'whattoexpect.com' }
+    ],
+    review: null
+  },
+  {
+    id: 'mayo-clinic-baby-first-years',
+    title: 'Mayo Clinic Guide to Your Baby\'s First Years',
+    author: 'Mayo Clinic',
+    initials: 'MC',
+    cover: 'cover-green',
+    tags: ['newborn', 'reference'],
+    about: 'A medical reference for years 0&ndash;3 from one of the most respected hospitals in the US.',
+    synopsis: 'Organised in two halves: the first walks month-by-month through growth, development, feeding, and care; the second is an A&ndash;Z reference for health concerns &mdash; fevers, rashes, when to call the doctor, common illnesses. Conservative, factual, and free of trend-driven advice.',
+    whyItHelps: 'It\'s your at-home medical reference. When something looks off &mdash; a rash, an unfamiliar cry, a worrying symptom &mdash; this tells you whether to wait, call your paediatrician, or go in.',
+    links: [],
+    review: null
+  }
+];
+
+// ─────────────────────────────────────────────────────
+// Rendering
+// ─────────────────────────────────────────────────────
+
+const TAG_LABELS = {
+  pregnancy: 'Pregnancy',
+  newborn: 'Newborn',
+  sleep: 'Sleep',
+  reference: 'Reference'
+};
+
+const REC_BADGE = {
+  'yes':           { cls: 'rec-yes',     label: '★ Recommend' },
+  'with-caveats':  { cls: 'rec-caveats', label: '★ With caveats' },
+  'no':            { cls: 'rec-no',      label: 'Skip it' }
+};
+
+function renderTags(tags) {
+  return tags.map(t => `<span class="tag tag-${t}">${TAG_LABELS[t] || t}</span>`).join('');
+}
+
+function renderRecBadge(review) {
+  if (!review || !review.recommend) {
+    return '<span class="rec-badge rec-pending">Review pending</span>';
+  }
+  const r = REC_BADGE[review.recommend];
+  return r ? `<span class="rec-badge ${r.cls}">${r.label}</span>` : '';
+}
+
+function renderTake(review) {
+  if (!review) {
+    return `
+      <div class="take-pending">
+        <strong>TODO:</strong> personal review &mdash; coming soon.
+      </div>`;
+  }
+  const rows = [];
+  if (review.bestFor) {
+    rows.push(`
+      <div class="take-row">
+        <div class="take-label">&#127919; Best for</div>
+        <div>${review.bestFor}</div>
+      </div>`);
+  }
+  if (review.liked && review.liked.length) {
+    rows.push(`
+      <div class="take-row take-liked">
+        <div class="take-label">&#43; What I liked</div>
+        <ul>${review.liked.map(x => `<li>${x}</li>`).join('')}</ul>
+      </div>`);
+  }
+  if (review.disliked && review.disliked.length) {
+    rows.push(`
+      <div class="take-row take-disliked">
+        <div class="take-label">&minus; What I didn’t</div>
+        <ul>${review.disliked.map(x => `<li>${x}</li>`).join('')}</ul>
+      </div>`);
+  }
+  if (review.verdict) {
+    rows.push(`
+      <div class="take-row">
+        <div class="take-label">&#9998; Verdict</div>
+        <div>${review.verdict}</div>
+      </div>`);
+  }
+  if (!rows.length) {
+    return `<div class="take-pending"><strong>TODO:</strong> personal review &mdash; coming soon.</div>`;
+  }
+  return `<div class="take-grid">${rows.join('')}</div>`;
+}
+
+function renderLinks(links) {
+  if (!links || !links.length) return '';
+  return `
+    <div class="book-links">
+      ${links.map(l => `<a class="book-link" href="${l.url}" target="_blank" rel="noopener">${l.label}</a>`).join('')}
+    </div>`;
+}
+
+function renderBook(book) {
+  return `
+    <article class="book fade-in" data-tags="${book.tags.join(' ')}" id="${book.id}">
+      <div class="book-header">
+        <div class="book-cover ${book.cover}">${book.initials}</div>
+        <div class="book-meta">
+          <div class="book-title">${book.title}</div>
+          <div class="book-author">${book.author}</div>
+          <div class="book-tags">${renderTags(book.tags)}</div>
+        </div>
+        ${renderRecBadge(book.review)}
+      </div>
+
+      <div class="book-about">
+        <strong>What it’s about</strong>
+        ${book.about}
+      </div>
+
+      <div class="expand-block">
+        <button class="expand-toggle" aria-expanded="false">
+          Synopsis <span class="chevron">&#9660;</span>
+        </button>
+        <div class="expand-body">${book.synopsis}</div>
+      </div>
+
+      <div class="expand-block">
+        <button class="expand-toggle" aria-expanded="false">
+          Why it helps parents <span class="chevron">&#9660;</span>
+        </button>
+        <div class="expand-body">${book.whyItHelps}</div>
+      </div>
+
+      <div class="expand-block">
+        <button class="expand-toggle" aria-expanded="false">
+          My take <span class="chevron">&#9660;</span>
+        </button>
+        <div class="expand-body">${renderTake(book.review)}</div>
+      </div>
+
+      ${renderLinks(book.links)}
+    </article>`;
+}
+
+const listEl = document.getElementById('book-list');
+listEl.innerHTML = BOOKS.map(renderBook).join('');
+
+// Expand/collapse
+listEl.addEventListener('click', e => {
+  const btn = e.target.closest('.expand-toggle');
+  if (!btn) return;
+  const block = btn.closest('.expand-block');
+  const open = block.classList.toggle('open');
+  btn.setAttribute('aria-expanded', open);
+});
+
+// Filter
+const filterEl = document.getElementById('filter');
+filterEl.addEventListener('click', e => {
+  const btn = e.target.closest('.filter-btn');
+  if (!btn) return;
+  filterEl.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const tag = btn.dataset.tag;
+  document.querySelectorAll('.book').forEach(book => {
+    const tags = (book.dataset.tags || '').split(' ');
+    book.classList.toggle('hidden', tag !== 'all' && !tags.includes(tag));
+  });
+});
+
+// Fade-in
+const fadeObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      fadeObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.08 });
+document.querySelectorAll('.fade-in').forEach(el => fadeObserver.observe(el));
+</script>
+</body>
+</html>

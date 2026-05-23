@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Baby Sleep Guide — Science-Based Help for Tired Parents</title>
+<title>Forty Winks — Parenting Notes from a Tired Dad</title>
 <style>
   /* ── Reset & Base ───────────────────────────────────── */
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -19,10 +19,8 @@
     --accent:    #c4a0ff;
     --accent2:   #7b8cff;
     --gold:      #ffd07a;
-    --gold-dim:  #b8944d;
     --warm:      #ffb07a;
     --success:   #7adca0;
-    --danger:    #ff8a8a;
     --radius:    16px;
     --radius-sm: 10px;
     --shadow:    0 4px 24px rgba(0,0,0,.35);
@@ -30,13 +28,7 @@
     --nav-h:     64px;
   }
 
-  html {
-    scroll-behavior: smooth;
-    scroll-padding-top: calc(var(--nav-h) + 16px);
-    overflow-y: scroll;
-    height: auto;
-  }
-
+  html { scroll-behavior: smooth; }
   body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
     background: var(--bg);
@@ -44,15 +36,10 @@
     line-height: 1.65;
     font-size: 17px;
     -webkit-font-smoothing: antialiased;
-    height: auto;
-    overflow-y: visible;
+    min-height: 100vh;
   }
 
-  /* ── Utility ────────────────────────────────────────── */
-  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
   .container { max-width: var(--max-w); margin: 0 auto; padding: 0 20px; }
-
-  /* Stars applied to body background directly */
 
   /* ── Navigation ─────────────────────────────────────── */
   .top-nav {
@@ -79,38 +66,35 @@
     transition: all .2s;
   }
   .nav-links a:hover { color: var(--text); background: var(--surface); }
-
-  @media (max-width: 600px) {
-    .nav-links { display: none; }
-  }
+  .nav-links a[aria-current="page"] { color: var(--text); background: var(--surface); }
 
   /* ── Hero ────────────────────────────────────────────── */
   .hero {
     text-align: center;
-    padding: 60px 20px 40px;
-    position: relative;
+    padding: 80px 20px 48px;
   }
   .hero-moon {
-    width: 80px; height: 80px;
+    width: 96px; height: 96px;
     background: radial-gradient(circle at 35% 35%, var(--gold), #e6a020);
     border-radius: 50%;
-    margin: 0 auto 24px;
+    margin: 0 auto 32px;
     box-shadow: 0 0 60px rgba(255,208,122,.25), 0 0 120px rgba(255,208,122,.1);
     position: relative;
   }
   .hero-moon::after {
     content: '';
-    position: absolute; top: 8px; right: 10px;
-    width: 30px; height: 30px;
+    position: absolute; top: 10px; right: 12px;
+    width: 36px; height: 36px;
     background: var(--bg);
     border-radius: 50%;
   }
   .hero h1 {
-    font-size: clamp(28px, 6vw, 42px);
+    font-size: clamp(34px, 7vw, 52px);
     font-weight: 800;
-    line-height: 1.15;
+    line-height: 1.1;
     color: #fff;
-    margin-bottom: 12px;
+    margin-bottom: 16px;
+    letter-spacing: -0.02em;
   }
   .hero h1 em {
     font-style: normal;
@@ -118,332 +102,109 @@
     -webkit-background-clip: text; background-clip: text;
     -webkit-text-fill-color: transparent;
   }
-  .hero p {
+  .hero-lede {
     color: var(--text-dim);
-    font-size: 16px; max-width: 520px; margin: 0 auto 28px;
+    font-size: 17px; max-width: 540px; margin: 0 auto;
     line-height: 1.6;
-  }
-  .hero-sources {
-    font-size: 12px; color: var(--text-dim); opacity: .7;
-    max-width: 480px; margin: 0 auto;
-    line-height: 1.5;
-  }
-
-  /* ── Age Picker ─────────────────────────────────────── */
-  .age-picker-wrap {
-    padding: 0 20px 32px;
-  }
-  .age-picker {
-    max-width: var(--max-w); margin: 0 auto;
-    display: flex; gap: 8px;
-    overflow-x: auto;
-    padding: 8px 0 12px;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-  }
-  .age-picker::-webkit-scrollbar { display: none; }
-  .age-btn {
-    flex-shrink: 0;
-    padding: 10px 18px;
-    border: 1px solid var(--border);
-    border-radius: 100px;
-    background: var(--bg-card);
-    color: var(--text-dim);
-    font-size: 14px; font-weight: 600;
-    cursor: pointer;
-    transition: all .25s;
-    white-space: nowrap;
-  }
-  .age-btn:hover { border-color: var(--accent); color: var(--text); }
-  .age-btn.active {
-    background: linear-gradient(135deg, rgba(196,160,255,.2), rgba(123,140,255,.15));
-    border-color: var(--accent);
-    color: #fff;
-    box-shadow: 0 0 20px rgba(196,160,255,.15);
   }
 
   /* ── Section ────────────────────────────────────────── */
-  .section {
-    padding: 16px 0;
-  }
-  .section-header {
-    display: flex; align-items: center; gap: 12px;
-    margin-bottom: 8px;
-  }
-  .section-num {
-    width: 32px; height: 32px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--accent), var(--accent2));
-    display: flex; align-items: center; justify-content: center;
-    font-size: 14px; font-weight: 800; color: #fff;
-    flex-shrink: 0;
-  }
-  .section-title {
-    font-size: 13px; font-weight: 700;
+  .section { padding: 24px 0 16px; }
+  .section-eyebrow {
+    font-size: 12px; font-weight: 700;
     text-transform: uppercase; letter-spacing: 1.5px;
     color: var(--accent);
+    text-align: center;
+    margin-bottom: 24px;
   }
 
-  /* ── Cards ──────────────────────────────────────────── */
-  .card {
+  /* ── Big Resource Cards ─────────────────────────────── */
+  .resource-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 32px;
+  }
+  .resource-card {
+    display: block;
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    padding: 28px 24px;
-    margin-bottom: 16px;
-    box-shadow: var(--shadow);
-    transition: border-color .3s;
-  }
-  .card:hover { border-color: rgba(196,160,255,.25); }
-
-  .card-age-label {
-    display: inline-block;
-    font-size: 12px; font-weight: 700;
-    text-transform: uppercase; letter-spacing: 1px;
-    color: var(--gold);
-    background: rgba(255,208,122,.1);
-    padding: 4px 12px;
-    border-radius: 100px;
-    margin-bottom: 12px;
-  }
-  .card h3 {
-    font-size: 22px; font-weight: 700;
-    color: #fff; margin-bottom: 4px;
-  }
-  .card-subtitle {
-    font-size: 14px; color: var(--text-dim);
-    margin-bottom: 20px;
-    font-style: italic;
-  }
-
-  /* ── Expandable Blocks ──────────────────────────────── */
-  .expand-block { margin-bottom: 12px; }
-  .expand-toggle {
-    width: 100%;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 14px 16px;
-    background: var(--bg-card2);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    color: var(--text);
-    font-size: 15px; font-weight: 600;
-    cursor: pointer;
-    transition: all .2s;
-  }
-  .expand-toggle:hover { background: var(--surface); }
-  .expand-toggle .chevron {
-    transition: transform .3s;
-    color: var(--text-dim);
-    font-size: 12px;
-  }
-  .expand-block.open .expand-toggle { border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
-  .expand-block.open .chevron { transform: rotate(180deg); }
-  .expand-body {
-    display: none;
-    padding: 16px 16px 20px;
-    background: var(--bg-card2);
-    border: 1px solid var(--border);
-    border-top: none;
-    border-radius: 0 0 var(--radius-sm) var(--radius-sm);
-  }
-  .expand-block.open .expand-body { display: block; }
-
-  /* ── Lists ──────────────────────────────────────────── */
-  .tip-list {
-    list-style: none; padding: 0;
-  }
-  .tip-list li {
+    padding: 32px 28px;
+    text-decoration: none;
+    color: inherit;
+    transition: transform .25s, border-color .25s, box-shadow .25s;
     position: relative;
-    padding: 8px 0 8px 24px;
-    font-size: 15px;
-    line-height: 1.6;
-    border-bottom: 1px solid rgba(255,255,255,.04);
-  }
-  .tip-list li:last-child { border-bottom: none; }
-  .tip-list li::before {
-    content: '';
-    position: absolute; left: 2px; top: 16px;
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    background: var(--accent);
-    opacity: .6;
-  }
-
-  /* ── Callout (Golden Rules / Tips) ──────────────────── */
-  .callout {
-    background: linear-gradient(135deg, rgba(255,208,122,.08), rgba(255,176,122,.05));
-    border: 1px solid rgba(255,208,122,.2);
-    border-radius: var(--radius-sm);
-    padding: 20px;
-    margin: 16px 0;
-  }
-  .callout-title {
-    font-size: 14px; font-weight: 700;
-    color: var(--gold);
-    text-transform: uppercase; letter-spacing: .5px;
-    margin-bottom: 8px;
-    display: flex; align-items: center; gap: 8px;
-  }
-  .callout p { font-size: 15px; color: var(--text); line-height: 1.65; }
-
-  .callout-blue {
-    background: linear-gradient(135deg, rgba(123,140,255,.08), rgba(196,160,255,.05));
-    border-color: rgba(123,140,255,.2);
-  }
-  .callout-blue .callout-title { color: var(--accent2); }
-
-  /* ── Data Table ─────────────────────────────────────── */
-  .data-table-wrap {
-    overflow-x: auto;
-    margin: 16px 0;
-    border-radius: var(--radius-sm);
-    border: 1px solid var(--border);
-  }
-  .data-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 14px;
-    min-width: 500px;
-  }
-  .data-table th {
-    background: var(--surface);
-    color: var(--accent);
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    padding: 12px 16px;
-    text-align: left;
-    border-bottom: 1px solid var(--border);
-    white-space: nowrap;
-  }
-  .data-table td {
-    padding: 12px 16px;
-    border-bottom: 1px solid rgba(255,255,255,.04);
-    vertical-align: top;
-    line-height: 1.5;
-  }
-  .data-table tr:last-child td { border-bottom: none; }
-  .data-table tr:hover td { background: rgba(196,160,255,.03); }
-
-  /* ── Troubleshooting Cards ──────────────────────────── */
-  .trouble-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    margin-bottom: 12px;
     overflow: hidden;
   }
-  .trouble-toggle {
-    width: 100%;
-    display: flex; align-items: center; gap: 12px;
-    padding: 18px 20px;
-    background: transparent;
-    border: none;
-    color: var(--text);
-    font-size: 16px; font-weight: 600;
-    cursor: pointer;
-    text-align: left;
-    transition: background .2s;
+  .resource-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(196,160,255,.0), rgba(196,160,255,.06));
+    opacity: 0;
+    transition: opacity .25s;
+    pointer-events: none;
   }
-  .trouble-toggle:hover { background: rgba(255,255,255,.02); }
-  .trouble-icon {
-    width: 36px; height: 36px;
-    border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 18px;
-    flex-shrink: 0;
+  .resource-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(196,160,255,.4);
+    box-shadow: 0 8px 32px rgba(0,0,0,.4), 0 0 0 1px rgba(196,160,255,.1);
   }
-  .trouble-toggle .chevron {
-    margin-left: auto;
+  .resource-card:hover::before { opacity: 1; }
+  .resource-icon {
+    font-size: 32px;
+    margin-bottom: 16px;
+    display: block;
+  }
+  .resource-card h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+  .resource-card p {
     color: var(--text-dim);
-    font-size: 12px;
-    transition: transform .3s;
-    flex-shrink: 0;
+    font-size: 15px;
+    line-height: 1.55;
+    margin-bottom: 20px;
   }
-  .trouble-card.open .trouble-toggle .chevron { transform: rotate(180deg); }
-  .trouble-body {
-    display: none;
-    padding: 0 20px 20px 68px;
-  }
-  .trouble-card.open .trouble-body { display: block; }
-
-  /* ── Quick Reference ────────────────────────────────── */
-  .qr-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 16px;
-  }
-  .qr-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 24px;
-  }
-  .qr-card h4 {
-    font-size: 16px; font-weight: 700;
-    color: #fff; margin-bottom: 12px;
-    display: flex; align-items: center; gap: 8px;
-  }
-  .qr-card .badge {
-    font-size: 10px; font-weight: 700;
-    padding: 3px 8px; border-radius: 100px;
-    text-transform: uppercase; letter-spacing: .5px;
-  }
-  .badge-safe { background: rgba(122,220,160,.15); color: var(--success); }
-  .badge-warn { background: rgba(255,138,138,.12); color: var(--danger); }
-
-  .compare-grid {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
-  }
-  .compare-col {
-    padding: 14px;
-    border-radius: var(--radius-sm);
+  .resource-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
     font-size: 14px;
+    font-weight: 600;
+    color: var(--accent);
   }
-  .compare-col h5 {
-    font-size: 12px; font-weight: 700;
-    text-transform: uppercase; letter-spacing: .5px;
+  .resource-cta::after {
+    content: '\2192';
+    transition: transform .2s;
+  }
+  .resource-card:hover .resource-cta::after { transform: translateX(3px); }
+
+  /* ── About callout ──────────────────────────────────── */
+  .about-card {
+    background: linear-gradient(135deg, rgba(255,208,122,.08), rgba(255,176,122,.05));
+    border: 1px solid rgba(255,208,122,.2);
+    border-radius: var(--radius);
+    padding: 24px 28px;
+    margin-bottom: 32px;
+  }
+  .about-card h3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 1px;
     margin-bottom: 10px;
   }
-  .compare-good { background: rgba(122,220,160,.06); border: 1px solid rgba(122,220,160,.15); }
-  .compare-good h5 { color: var(--success); }
-  .compare-bad { background: rgba(255,176,122,.06); border: 1px solid rgba(255,176,122,.15); }
-  .compare-bad h5 { color: var(--warm); }
-  .compare-col ul { list-style: none; }
-  .compare-col li {
-    font-size: 14px; padding: 3px 0;
-    color: var(--text-dim);
-  }
-
-  /* ── Routine Steps ──────────────────────────────────── */
-  .routine-steps { list-style: none; counter-reset: step; }
-  .routine-steps li {
-    counter-increment: step;
-    position: relative;
-    padding: 10px 0 10px 44px;
+  .about-card p {
     font-size: 15px;
-    border-left: 2px solid var(--border);
-    margin-left: 14px;
+    line-height: 1.65;
+    color: var(--text);
   }
-  .routine-steps li::before {
-    content: counter(step);
-    position: absolute; left: -14px; top: 8px;
-    width: 28px; height: 28px;
-    border-radius: 50%;
-    background: var(--surface);
-    border: 2px solid var(--accent);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 12px; font-weight: 700; color: var(--accent);
-  }
-  .routine-steps li:last-child { border-left-color: transparent; }
-
-  /* ── Emergency Card ─────────────────────────────────── */
-  .emergency-card {
-    background: linear-gradient(135deg, rgba(255,138,138,.06), rgba(255,176,122,.04));
-    border: 1px solid rgba(255,138,138,.2);
-  }
-  .emergency-card h4 { color: var(--danger); }
+  .about-card p + p { margin-top: 10px; }
 
   /* ── Footer ─────────────────────────────────────────── */
   .footer {
@@ -454,839 +215,76 @@
     line-height: 1.7;
   }
   .footer a { color: var(--accent); text-decoration: none; }
-  .footer-sources {
-    max-width: 560px; margin: 0 auto 16px;
-    font-size: 12px; opacity: .6;
-  }
   .footer-heart { color: var(--warm); }
 
   /* ── Responsive ─────────────────────────────────────── */
   @media (max-width: 600px) {
     body { font-size: 16px; }
-    .hero { padding: 40px 16px 28px; }
-    .hero h1 { font-size: 26px; }
-    .card { padding: 20px 18px; }
-    .expand-toggle { padding: 12px 14px; font-size: 14px; }
-    .data-table { font-size: 13px; }
-    .compare-grid { grid-template-columns: 1fr; }
-    .trouble-body { padding-left: 20px; }
-    .qr-grid { grid-template-columns: 1fr; }
+    .nav-links a { font-size: 12px; padding: 6px 10px; }
+    .hero { padding: 56px 16px 32px; }
+    .resource-grid { grid-template-columns: 1fr; gap: 16px; }
+    .resource-card { padding: 24px 22px; }
+    .about-card { padding: 20px 22px; }
   }
 
   /* ── Scroll fade-in ─────────────────────────────────── */
-  .fade-in {
-    opacity: 0;
-    transform: translateY(16px);
-    transition: opacity .5s ease, transform .5s ease;
-  }
-  .fade-in.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  .fade-in { opacity: 0; transform: translateY(12px); transition: opacity .5s ease, transform .5s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
 </style>
 </head>
 <body>
-<!-- ═══ NAV ═══ -->
+
 <nav class="top-nav">
   <div class="container">
-    <a href="#" class="nav-logo"><span>&#9790;</span> Baby Sleep Guide</a>
+    <a href="index.html" class="nav-logo"><span>&#9790;</span> Forty Winks</a>
     <div class="nav-links">
-      <a href="#ages">By Age</a>
-      <a href="#techniques">Techniques</a>
-      <a href="#timeline">Timeline</a>
-      <a href="#troubleshooting">Help</a>
-      <a href="#quick-ref">Quick Ref</a>
+      <a href="index.html" aria-current="page">Home</a>
+      <a href="sleep.html">Sleep</a>
+      <a href="books.html">Books</a>
     </div>
   </div>
 </nav>
 
-<!-- ═══ HERO ═══ -->
 <header class="hero">
   <div class="hero-moon"></div>
-  <h1>Your Baby's <em>Sleep</em></h1>
-  <p>A science-based quick reference guide for tired parents. Tap your baby's age below to jump right to what you need.</p>
-  <div class="hero-sources">Based on: The Happiest Baby on the Block &middot; Precious Little Sleep &middot; Healthy Sleep Habits, Happy Child</div>
+  <h1>Notes from a <em>Tired Dad</em></h1>
+  <p class="hero-lede">A small collection of what actually helped me through the first year &mdash; a science-based sleep guide and the books I wish I'd known to read sooner.</p>
 </header>
 
-<!-- ═══ GOLDEN RULE ═══ -->
-<div class="container">
-  <div class="callout fade-in">
-    <div class="callout-title">&#11088; Golden Rule</div>
-    <p><strong>Sleep begets sleep.</strong> An overtired baby is harder to soothe and sleep-train than a well-rested one. Never sacrifice a nap to improve night sleep&nbsp;&mdash;&nbsp;it backfires.</p>
-  </div>
-</div>
+<main class="container">
 
-<!-- ═══ AGE PICKER ═══ -->
-<div class="age-picker-wrap" id="ages">
-  <div class="age-picker">
-    <button class="age-btn active" data-target="age-0-4w">0&ndash;4 wks</button>
-    <button class="age-btn" data-target="age-4-8w">4&ndash;8 wks</button>
-    <button class="age-btn" data-target="age-2-3m">2&ndash;3 mo</button>
-    <button class="age-btn" data-target="age-3-4m">3&ndash;4 mo</button>
-    <button class="age-btn" data-target="age-4-6m">4&ndash;6 mo</button>
-    <button class="age-btn" data-target="age-6-9m">6&ndash;9 mo</button>
-    <button class="age-btn" data-target="age-9-12m">9&ndash;12 mo</button>
-  </div>
-</div>
-
-<!-- ═══ SECTION 1: AGE-BY-AGE ═══ -->
-<div class="container">
-  <div class="section" id="section-1">
-    <div class="section-header">
-      <div class="section-num">1</div>
-      <div class="section-title">Age-by-Age Sleep Guide</div>
+  <div class="section">
+    <div class="section-eyebrow">Two Resources</div>
+    <div class="resource-grid">
+      <a href="sleep.html" class="resource-card fade-in">
+        <span class="resource-icon">&#9790;</span>
+        <h2>Sleep Guide</h2>
+        <p>Age-by-age sleep expectations, soothing techniques, troubleshooting, and a quick reference for the things you forget at 3 AM.</p>
+        <span class="resource-cta">Open the guide</span>
+      </a>
+      <a href="books.html" class="resource-card fade-in">
+        <span class="resource-icon">&#128218;</span>
+        <h2>Books I Read</h2>
+        <p>Honest reviews of the 8 pregnancy and baby books that helped me &mdash; what each one is about, what I liked, and whether I'd recommend it.</p>
+        <span class="resource-cta">See the list</span>
+      </a>
     </div>
   </div>
 
-  <!-- Weeks 1-4 -->
-  <div class="card fade-in" id="age-0-4w">
-    <div class="card-age-label">Weeks 1&ndash;4</div>
-    <h3>The Fourth Trimester Begins</h3>
-    <div class="card-subtitle">Survival mode &mdash; no schedule, just response</div>
-    <div class="expand-block open">
-      <button class="expand-toggle" aria-expanded="true">
-        What to Expect <span class="chevron">&#9660;</span>
-      </button>
-      <div class="expand-body">
-        <ul class="tip-list">
-          <li>Sleeps 14&ndash;18 hours per day in short bursts (45 min&ndash;3 hrs)</li>
-          <li>No circadian rhythm yet &mdash; day and night are the same to your baby</li>
-          <li>Wake windows: only 45&ndash;60 minutes between sleeps</li>
-          <li>Feeding every 2&ndash;3 hours (breast) or 2.5&ndash;3.5 hrs (formula) &mdash; this drives sleep cycles</li>
-          <li>Startle (Moro) reflex wakes baby frequently &mdash; this is normal and neurological</li>
-          <li>Stomach is the size of a marble at birth, a walnut at 1 week &mdash; tiny feeds, frequent waking</li>
-        </ul>
-      </div>
-    </div>
-    <div class="expand-block open">
-      <button class="expand-toggle" aria-expanded="true">
-        What to Do <span class="chevron">&#9660;</span>
-      </button>
-      <div class="expand-body">
-        <ul class="tip-list">
-          <li>Feed on demand &mdash; do not attempt any schedule yet</li>
-          <li>Allow all sleep props: feeding to sleep, holding, rocking, pacifier &mdash; ALL acceptable now</li>
-          <li>Swaddle every sleep to suppress Moro reflex</li>
-          <li>Keep room dark and use white noise for all sleeps</li>
-          <li>Safe sleep: firm flat surface, on back, no loose bedding (AAP guidelines)</li>
-          <li>Do not worry about &lsquo;bad habits&rsquo; &mdash; survival and bonding come first</li>
-        </ul>
-      </div>
-    </div>
-    <div class="callout">
-      <div class="callout-title">&#11088; The 5 S's (Dr. Karp) &mdash; Start Now</div>
-      <p><strong>Swaddle &rarr; Side/Stomach hold &rarr; Shush &rarr; Swing &rarr; Suck.</strong> Layer all 5 simultaneously for a crying newborn. Each one activates the calming reflex; together they are dramatically more effective.</p>
-    </div>
+  <div class="about-card fade-in">
+    <h3>&#11088; Why this site</h3>
+    <p>When my baby arrived, I read a stack of books and bookmarked dozens of articles trying to figure out sleep, feeding, and what was actually normal. Most of it was either too academic, too dogmatic, or written for a different family than mine.</p>
+    <p>So I distilled what worked into two things: a practical sleep cheat-sheet, and a short shelf of books I'd hand to any new parent. Hope it saves you a few sleepless hours.</p>
   </div>
 
-  <!-- Weeks 4-8 -->
-  <div class="card fade-in" id="age-4-8w">
-    <div class="card-age-label">Weeks 4&ndash;8</div>
-    <h3>First Patterns Emerge</h3>
-    <div class="card-subtitle">Tiny circadian windows opening</div>
-    <div class="expand-block">
-      <button class="expand-toggle" aria-expanded="false">
-        What to Expect <span class="chevron">&#9660;</span>
-      </button>
-      <div class="expand-body">
-        <ul class="tip-list">
-          <li>Sleep total: 14&ndash;16 hours/day, still no consolidated night sleep</li>
-          <li>Wake windows extend slightly to 60&ndash;75 minutes</li>
-          <li>First &lsquo;social smile&rsquo; appears (~6 weeks) &mdash; baby is more alert and stimulated</li>
-          <li>6-week peak fussiness and sleep regression is common &mdash; this is neurological, not your fault</li>
-          <li>Around 6&ndash;8 weeks: you may see a first longer night stretch of 3&ndash;5 hours</li>
-          <li>Naps are still short (30&ndash;45 min) and unpredictable</li>
-        </ul>
-      </div>
-    </div>
-    <div class="expand-block">
-      <button class="expand-toggle" aria-expanded="false">
-        What to Do <span class="chevron">&#9660;</span>
-      </button>
-      <div class="expand-body">
-        <ul class="tip-list">
-          <li>Continue all 5 S's for soothing</li>
-          <li>Begin differentiating day and night: bright light and activity during day, dim/dark and quiet at night</li>
-          <li>Introduce a simple &lsquo;pre-sleep ritual&rsquo; (even 2 steps): e.g., dim lights &rarr; swaddle &rarr; white noise</li>
-          <li>Watch wake windows carefully &mdash; overtiredness is the #1 enemy this stage</li>
-          <li>Consider a &lsquo;EASY&rsquo; loose structure: Eat, Activity, Sleep, You-time (but do NOT enforce rigidly)</li>
-          <li>Keep doing what works &mdash; do not sleep train yet</li>
-        </ul>
-      </div>
-    </div>
-  </div>
+</main>
 
-  <!-- Months 2-3 -->
-  <div class="card fade-in" id="age-2-3m">
-    <div class="card-age-label">Months 2&ndash;3</div>
-    <h3>Circadian Rhythm Developing</h3>
-    <div class="card-subtitle">Longer nights begin to appear</div>
-    <div class="expand-block">
-      <button class="expand-toggle" aria-expanded="false">
-        What to Expect <span class="chevron">&#9660;</span>
-      </button>
-      <div class="expand-body">
-        <ul class="tip-list">
-          <li>Sleep total: 13&ndash;15 hours/day</li>
-          <li>Wake windows: 75&ndash;90 minutes</li>
-          <li>Circadian rhythm begins forming &mdash; melatonin production increases</li>
-          <li>Naps consolidate slightly: 3&ndash;5 naps/day, some may lengthen to 60&ndash;90 min</li>
-          <li>Many babies begin giving a 4&ndash;6 hour first stretch at night</li>
-          <li>~8&ndash;12 week growth spurt: temporary increase in night waking and feeding</li>
-          <li>Swaddle still essential &mdash; Moro reflex usually gone by 3&ndash;4 months</li>
-        </ul>
-      </div>
-    </div>
-    <div class="expand-block">
-      <button class="expand-toggle" aria-expanded="false">
-        What to Do <span class="chevron">&#9660;</span>
-      </button>
-      <div class="expand-body">
-        <ul class="tip-list">
-          <li>Set a consistent bedtime between 7&ndash;9 PM (follow drowsy cues, not the clock)</li>
-          <li>Establish a 20&ndash;30 min bedtime routine: bath &rarr; massage &rarr; feed &rarr; dark room &rarr; white noise &rarr; sleep</li>
-          <li>Practice putting baby down &lsquo;drowsy but awake&rsquo; once or twice per day &mdash; builds self-soothing foundation</li>
-          <li>Introduce light/dark cues: open curtains after morning wake, blackout blinds for all sleeps</li>
-          <li>Begin weaning the swaddle only if baby is showing signs of rolling (safety critical)</li>
-        </ul>
-      </div>
-    </div>
-    <div class="callout callout-blue">
-      <div class="callout-title">&#11088; &lsquo;Drowsy But Awake&rsquo; &mdash; Plant the Seed Now</div>
-      <p>You do not need baby to fall asleep independently yet. But practicing putting them down drowsy (not fully asleep) 1&ndash;2x per day at this age makes sleep training much easier at 4&ndash;6 months. Think of it as low-stakes practice.</p>
-    </div>
-  </div>
-
-  <!-- Months 3-4 -->
-  <div class="card fade-in" id="age-3-4m">
-    <div class="card-age-label">Months 3&ndash;4</div>
-    <h3>The 4-Month Regression</h3>
-    <div class="card-subtitle">The most disruptive &mdash; and most misunderstood &mdash; regression</div>
-    <div class="expand-block">
-      <button class="expand-toggle" aria-expanded="false">
-        What to Expect <span class="chevron">&#9660;</span>
-      </button>
-      <div class="expand-body">
-        <ul class="tip-list">
-          <li>Sleep architecture permanently shifts to adult-like cycles (light &rarr; deep &rarr; light every ~45 min)</li>
-          <li>Baby now fully wakes between sleep cycles and needs help connecting them</li>
-          <li>Previously good sleepers suddenly wake every 1&ndash;2 hours &mdash; this is NOT a phase that passes on its own</li>
-          <li>Naps may fall apart &mdash; short 30&ndash;45 min naps are common</li>
-          <li>Wake windows extend to 90&ndash;120 minutes</li>
-          <li>This regression does NOT resolve without some change in approach</li>
-        </ul>
-      </div>
-    </div>
-    <div class="expand-block">
-      <button class="expand-toggle" aria-expanded="false">
-        What to Do <span class="chevron">&#9660;</span>
-      </button>
-      <div class="expand-body">
-        <ul class="tip-list">
-          <li>Understand this is permanent brain development &mdash; do not wait it out hoping it resolves</li>
-          <li>Begin actively working toward independent sleep at bedtime</li>
-          <li>Transition out of swaddle now if not already done &mdash; use arms-out transition swaddle for 1 week</li>
-          <li>Introduce a consistent 4-nap schedule: wake &rarr; nap 1 (1.5 hr wake window) &rarr; nap 2 &rarr; nap 3 &rarr; nap 4 &rarr; bedtime</li>
-          <li>Move bedtime earlier if needed &mdash; 7&ndash;7:30 PM is often magic for this age</li>
-          <li>Consider pacifier use (if not already): it is AAP-approved and reduces SIDS risk</li>
-        </ul>
-      </div>
-    </div>
-    <div class="callout">
-      <div class="callout-title">&#11088; Why This Regression Is Different</div>
-      <p>The 4-month regression is <strong>permanent neurological change</strong>, not a temporary blip. Babies who were rocked/fed to sleep now wake and expect that same input every 45 minutes all night. The only lasting solution is teaching independent sleep skills.</p>
-    </div>
-  </div>
-
-  <!-- Months 4-6 -->
-  <div class="card fade-in" id="age-4-6m">
-    <div class="card-age-label">Months 4&ndash;6</div>
-    <h3>Prime Sleep Training Window</h3>
-    <div class="card-subtitle">The optimal time to build independent sleep</div>
-    <div class="expand-block">
-      <button class="expand-toggle" aria-expanded="false">
-        What to Expect <span class="chevron">&#9660;</span>
-      </button>
-      <div class="expand-body">
-        <ul class="tip-list">
-          <li>Sleep total: 12&ndash;15 hours/day (10&ndash;12 hrs night + 2&ndash;3 hrs naps)</li>
-          <li>Wake windows: 1.5&ndash;2.5 hours (gradually increasing)</li>
-          <li>3&ndash;4 naps at 4 months, transitioning to 3 naps by 5&ndash;6 months</li>
-          <li>Biologically ready for longer night stretches &mdash; many can go 8&ndash;12 hours without feeding</li>
-          <li>Developmental leaps and growth spurts may temporarily disrupt sleep</li>
-          <li>Solid foods begin ~6 months &mdash; no evidence this improves sleep</li>
-        </ul>
-      </div>
-    </div>
-    <div class="expand-block">
-      <button class="expand-toggle" aria-expanded="false">
-        What to Do <span class="chevron">&#9660;</span>
-      </button>
-      <div class="expand-body">
-        <ul class="tip-list">
-          <li>This is the ideal window for sleep training</li>
-          <li>Establish firm consistent schedule: morning wake time anchors the whole day</li>
-          <li>Nap schedule: Nap 1 ~1.5&ndash;2 hrs after morning wake; Nap 2 ~1.5&ndash;2 hrs after Nap 1; Nap 3 (catnap) late afternoon</li>
-          <li>Room transition: moving to own room works well at this age &mdash; easier before object permanence solidifies</li>
-          <li>Drop night feeds gradually (consult pediatrician on nutritional needs first)</li>
-          <li>Do not reintroduce sleep props you have weaned &mdash; consistency is critical</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <!-- Months 6-9 -->
-  <div class="card fade-in" id="age-6-9m">
-    <div class="card-age-label">Months 6&ndash;9</div>
-    <h3>Separation Anxiety Begins</h3>
-    <div class="card-subtitle">Object permanence and attachment intensify sleep challenges</div>
-    <div class="expand-block">
-      <button class="expand-toggle" aria-expanded="false">
-        What to Expect <span class="chevron">&#9660;</span>
-      </button>
-      <div class="expand-body">
-        <ul class="tip-list">
-          <li>Sleep total: 12&ndash;14 hours/day</li>
-          <li>Wake windows: 2.5&ndash;3.5 hours</li>
-          <li>2&ndash;3 naps, transitioning to 2 naps around 6&ndash;8 months</li>
-          <li>Object permanence develops (~7&ndash;8 months): baby now knows you still exist when you leave</li>
-          <li>Separation anxiety peaks &mdash; bedtime protests may increase even for previously good sleepers</li>
-          <li>6-month sleep regression linked to developmental leaps (sitting, crawling)</li>
-        </ul>
-      </div>
-    </div>
-    <div class="expand-block">
-      <button class="expand-toggle" aria-expanded="false">
-        What to Do <span class="chevron">&#9660;</span>
-      </button>
-      <div class="expand-body">
-        <ul class="tip-list">
-          <li>Play peekaboo games during the day &mdash; this teaches object permanence and that &lsquo;gone&rsquo; means &lsquo;coming back&rsquo;</li>
-          <li>Keep bedtime routine ultra-consistent &mdash; predictability is security</li>
-          <li>If sleep training hasn't happened, it becomes harder but is still very achievable now</li>
-          <li>Drop to 2 naps when wake windows exceed 2.5 hours or nap 1 keeps pushing back</li>
-          <li>Watch for overtiredness from 2-nap transition &mdash; move bedtime earlier during transition</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <!-- Months 9-12 -->
-  <div class="card fade-in" id="age-9-12m">
-    <div class="card-age-label">Months 9&ndash;12</div>
-    <h3>Mastery &amp; The Final Nap Transition</h3>
-    <div class="card-subtitle">Consolidation toward 2-nap then 1-nap schedule</div>
-    <div class="expand-block">
-      <button class="expand-toggle" aria-expanded="false">
-        What to Expect <span class="chevron">&#9660;</span>
-      </button>
-      <div class="expand-body">
-        <ul class="tip-list">
-          <li>Sleep total: 12&ndash;14 hours/day (10&ndash;12 hrs night + 2&ndash;3 hrs naps)</li>
-          <li>Wake windows: 3&ndash;4 hours</li>
-          <li>Steadily on 2 naps; some babies begin 2-to-1 nap transition near 12&ndash;15 months</li>
-          <li>9-month regression: linked to major motor development (pulling to stand, cruising)</li>
-          <li>Night wakings may return with teething &mdash; distinguish teething from habit-based waking</li>
-          <li>Early rising (before 6 AM) becomes common &mdash; do not rush in; use white noise and dark room</li>
-        </ul>
-      </div>
-    </div>
-    <div class="expand-block">
-      <button class="expand-toggle" aria-expanded="false">
-        What to Do <span class="chevron">&#9660;</span>
-      </button>
-      <div class="expand-body">
-        <ul class="tip-list">
-          <li>Maintain consistent 2-nap schedule with firm morning wake anchor</li>
-          <li>Address early rising by ensuring total daytime sleep is not too high and bedtime is not too early</li>
-          <li>For teething: comfort briefly then return to crib &mdash; avoid re-establishing full sleep props</li>
-          <li>Continue white noise through this phase &mdash; it remains valuable for consolidating sleep</li>
-          <li>Begin using comfort object (lovey) &mdash; can help baby self-soothe when placed in crib consistently</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <!-- ═══ SECTION 2: TECHNIQUES ═══ -->
-  <div class="section" id="techniques">
-    <div class="section-header">
-      <div class="section-num">2</div>
-      <div class="section-title">Soothing Techniques</div>
-    </div>
-  </div>
-
-  <!-- 5 S's Table -->
-  <div class="card fade-in">
-    <h3>The 5 S's (Dr. Harvey Karp)</h3>
-    <div class="card-subtitle">Most effective: Birth to 3&ndash;4 months. Activates the neurological &lsquo;calming reflex.&rsquo;</div>
-    <div class="data-table-wrap">
-      <table class="data-table">
-        <thead>
-          <tr><th>Technique</th><th>How To</th><th>Why It Works</th><th>Age Window</th></tr>
-        </thead>
-        <tbody>
-          <tr><td><strong>Swaddle</strong></td><td>Wrap snugly with arms down. Must be firm</td><td>Suppresses Moro startle reflex</td><td>Birth&ndash;3 mo</td></tr>
-          <tr><td><strong>Side/Stomach</strong></td><td>Hold baby on side or stomach in your arms (never in crib)</td><td>Triggers vestibular calming reflex</td><td>Birth&ndash;4 mo</td></tr>
-          <tr><td><strong>Shush</strong></td><td>Loud white noise near ear &mdash; louder than crying</td><td>Mimics womb environment (70&ndash;80 dB)</td><td>Birth&ndash;6+ mo</td></tr>
-          <tr><td><strong>Swing</strong></td><td>Fast, small jiggly motion (&lsquo;Jell-O head&rsquo; gentle is too slow)</td><td>Activates inner ear calming reflex</td><td>Birth&ndash;4 mo</td></tr>
-          <tr><td><strong>Suck</strong></td><td>Offer breast, bottle, or pacifier</td><td>Sucking releases calming hormones</td><td>Birth onward</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <!-- Swaddling -->
-  <div class="card fade-in">
-    <h3>Swaddling &mdash; In Depth</h3>
-    <ul class="tip-list">
-      <li>Use a large (47&Prime;) square muslin or stretchy swaddle blanket</li>
-      <li>Arms must be down at sides &mdash; arms-up swaddle is less effective for Moro suppression</li>
-      <li>Hips must be free to flex &mdash; hip dysplasia risk if legs swaddled straight</li>
-      <li>Stop swaddling immediately when baby shows any rolling signs &mdash; safety imperative</li>
-      <li>Transition: arms-out swaddle for 1 week &rarr; sleep sack</li>
-    </ul>
-    <div class="callout" style="margin-top:16px">
-      <div class="callout-title">&#11088; Swaddle Safety</div>
-      <p>A loose swaddle is dangerous. If baby can work arms free, the blanket becomes a suffocation hazard. Use velcro/zippered swaddle products (Love to Dream, Ollie, Swaddle UP) for reliability and safety.</p>
-    </div>
-  </div>
-
-  <!-- White Noise + Pacifier -->
-  <div class="card fade-in">
-    <h3>White Noise</h3>
-    <ul class="tip-list">
-      <li>Use throughout entire first year and beyond &mdash; no evidence of harm from proper use</li>
-      <li>Volume: 65&ndash;70 dB at crib (like a shower running) &mdash; use a dB meter app to verify</li>
-      <li>Place machine 6+ feet from baby &mdash; never directly in crib</li>
-      <li>Use for ALL sleeps: naps and nights. Consistency matters more than type of sound</li>
-      <li>Pink noise and brown noise are also effective &mdash; slightly lower pitched</li>
-    </ul>
-  </div>
-
-  <div class="card fade-in">
-    <h3>Pacifier</h3>
-    <ul class="tip-list">
-      <li>AAP-endorsed: reduces SIDS risk by up to 90% when used at sleep onset</li>
-      <li>Introduce after breastfeeding is established (3&ndash;4 weeks) if nursing</li>
-      <li>Do NOT replace in baby's mouth during night before 4&ndash;6 months &mdash; creates prop dependency</li>
-      <li>After 6 months: if pacifier waking occurs 4+ times/night, consider removing it entirely</li>
-      <li>Removal before 1 year has minimal dental impact</li>
-    </ul>
-  </div>
-
-  <!-- Wake Windows Table -->
-  <div class="card fade-in">
-    <h3>Wake Windows &mdash; Your Most Powerful Tool</h3>
-    <div class="card-subtitle">The single most reliable predictor of sleep success at every age.</div>
-    <div class="data-table-wrap">
-      <table class="data-table">
-        <thead>
-          <tr><th>Age</th><th>Wake Window</th><th>Naps/Day</th><th>Total Sleep</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>0&ndash;4 weeks</td><td>45&ndash;60 min</td><td>4&ndash;6+</td><td>14&ndash;18 hrs</td></tr>
-          <tr><td>1&ndash;2 months</td><td>60&ndash;75 min</td><td>4&ndash;5</td><td>14&ndash;16 hrs</td></tr>
-          <tr><td>2&ndash;3 months</td><td>75&ndash;90 min</td><td>4&ndash;5</td><td>13&ndash;15 hrs</td></tr>
-          <tr><td>3&ndash;4 months</td><td>90&ndash;120 min</td><td>4</td><td>12&ndash;15 hrs</td></tr>
-          <tr><td>4&ndash;5 months</td><td>1.5&ndash;2 hrs</td><td>3&ndash;4</td><td>12&ndash;15 hrs</td></tr>
-          <tr><td>5&ndash;6 months</td><td>2&ndash;2.5 hrs</td><td>3</td><td>12&ndash;14 hrs</td></tr>
-          <tr><td>6&ndash;8 months</td><td>2.5&ndash;3 hrs</td><td>2&ndash;3</td><td>12&ndash;14 hrs</td></tr>
-          <tr><td>8&ndash;10 months</td><td>3&ndash;3.5 hrs</td><td>2</td><td>12&ndash;14 hrs</td></tr>
-          <tr><td>10&ndash;12 months</td><td>3.5&ndash;4 hrs</td><td>2</td><td>12&ndash;14 hrs</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <!-- ═══ SECTION 3: TIMELINE ═══ -->
-  <div class="section" id="timeline">
-    <div class="section-header">
-      <div class="section-num">3</div>
-      <div class="section-title">Key Decision Timeline</div>
-    </div>
-  </div>
-
-  <!-- Room Transition -->
-  <div class="card fade-in">
-    <h3>When to Move Baby to Their Own Room</h3>
-    <ul class="tip-list">
-      <li>AAP recommends room-sharing (not bed-sharing) for at least 6 months, ideally 1 year</li>
-      <li>Many parents find room-sharing disrupts their own sleep (and therefore baby's)</li>
-      <li>Research on the 6-month recommendation is debated &mdash; some studies show no SIDS increase after 3 months</li>
-      <li>Ideal transition window: <strong>4&ndash;6 months</strong> &mdash; before object permanence, after initial SIDS risk period</li>
-      <li>Decision: discuss with your pediatrician and weigh family-specific factors</li>
-    </ul>
-  </div>
-
-  <!-- Sleep Training -->
-  <div class="card fade-in">
-    <h3>When to Sleep Train</h3>
-    <ul class="tip-list">
-      <li>Minimum age: <strong>4 months</strong> (16+ weeks corrected age for premature babies)</li>
-      <li>Optimal window: <strong>4&ndash;6 months</strong> &mdash; circadian rhythm established, before separation anxiety peaks</li>
-      <li>Still very effective: 6&ndash;9 months &mdash; takes 1&ndash;3 extra days</li>
-      <li>Harder but achievable: 9&ndash;12 months &mdash; object permanence + separation anxiety increases resistance</li>
-      <li>Prerequisites: pediatrician clears baby for night without feeds; baby is healthy</li>
-    </ul>
-    <div class="callout callout-blue" style="margin-top:16px">
-      <div class="callout-title">&#11088; What the Research Says</div>
-      <p>A landmark 2012 study (Price et al., <em>Pediatrics</em>) and a 2016 Flinders University RCT (Hall et al.) found <strong>no lasting harm</strong> to infant attachment, stress levels, or parent-child relationship from controlled crying methods. Multiple Cochrane reviews support behavioral sleep interventions as safe and effective.</p>
-    </div>
-  </div>
-
-  <!-- Sleep Training Methods -->
-  <div class="card fade-in">
-    <h3>Sleep Training Methods</h3>
-    <div class="card-subtitle">All are evidence-supported. Consistency matters more than method.</div>
-    <div class="data-table-wrap">
-      <table class="data-table">
-        <thead>
-          <tr><th>Method</th><th>What You Do</th><th>Best For</th><th>Timeline</th></tr>
-        </thead>
-        <tbody>
-          <tr><td><strong>Extinction (CIO)</strong></td><td>Put down awake, do not return until morning</td><td>Parents who can tolerate initial crying; fastest</td><td>2&ndash;5 nights</td></tr>
-          <tr><td><strong>Ferber / Graduated</strong></td><td>Check in at increasing intervals (3, 5, 10, 15 min). Brief comfort, no picking up</td><td>Parents needing reassurance; moderately fast</td><td>5&ndash;7 nights</td></tr>
-          <tr><td><strong>Chair Method</strong></td><td>Sit next to crib. Move chair farther each 3 nights</td><td>High-anxiety parents; slower but gradual</td><td>2&ndash;3 weeks</td></tr>
-          <tr><td><strong>Fading</strong></td><td>Slowly reduce soothing over 1&ndash;2 weeks</td><td>Parents who cannot do any crying; slowest</td><td>2&ndash;4 weeks</td></tr>
-          <tr><td><strong>Pick Up / Put Down</strong></td><td>Pick up when cries, put down when calm. Repeat</td><td>Babies under 5 months; physical contact needed</td><td>Variable</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <!-- Night Feeds -->
-  <div class="card fade-in">
-    <h3>When to Drop Night Feeds</h3>
-    <ul class="tip-list">
-      <li>Always consult your pediatrician first &mdash; this is a medical decision</li>
-      <li>Most formula-fed babies: can manage without a feed from ~4 months if weight gain is adequate</li>
-      <li>Breastfed babies: may need 1&ndash;2 feeds until 6&ndash;9 months</li>
-      <li>Signs baby may be ready: gaining weight well, making up calories during day, feeds briefly at night</li>
-      <li>Method: cold turkey or gradual reduction (shorten feed by 1&ndash;2 min every 2 nights)</li>
-    </ul>
-  </div>
-
-  <!-- Nap Transitions -->
-  <div class="card fade-in">
-    <h3>Nap Transitions</h3>
-    <div class="data-table-wrap">
-      <table class="data-table">
-        <thead><tr><th>Transition</th><th>Typical Age</th></tr></thead>
-        <tbody>
-          <tr><td>4 &rarr; 3 naps</td><td>Around 3&ndash;5 months</td></tr>
-          <tr><td>3 &rarr; 2 naps</td><td>Around 6&ndash;8 months</td></tr>
-          <tr><td>2 &rarr; 1 nap</td><td>Around 14&ndash;18 months</td></tr>
-          <tr><td>1 nap (until ~3 yrs)</td><td>Nap until 3&ndash;4 years (research supports this)</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="callout" style="margin-top:16px">
-      <div class="callout-title">&#11088; Transition Tip</div>
-      <p>During any nap transition: temporarily move bedtime <strong>30&ndash;45 minutes earlier</strong> to compensate for lost daytime sleep. Expect 1&ndash;2 weeks of disrupted sleep during the transition.</p>
-    </div>
-  </div>
-
-  <!-- ═══ SECTION 4: TROUBLESHOOTING ═══ -->
-  <div class="section" id="troubleshooting">
-    <div class="section-header">
-      <div class="section-num">4</div>
-      <div class="section-title">Troubleshooting</div>
-    </div>
-  </div>
-
-  <!-- Trouble: 45 min waking -->
-  <div class="trouble-card fade-in">
-    <button class="trouble-toggle">
-      <span class="trouble-icon" style="background:rgba(196,160,255,.12);color:var(--accent)">&#9790;</span>
-      Baby Wakes Every 45 Minutes
-      <span class="chevron">&#9660;</span>
-    </button>
-    <div class="trouble-body">
-      <ul class="tip-list">
-        <li><strong>Most likely cause:</strong> sleep cycle arousal &mdash; baby cannot connect cycles independently</li>
-        <li><strong>Under 4 months:</strong> normal. Soothe and resettle. Not the time to &lsquo;fix&rsquo; it</li>
-        <li><strong>Over 4 months:</strong> this is a sleep associations issue. Baby needs same conditions at 3 AM that were present at bedtime</li>
-        <li><strong>Fix:</strong> ensure bedtime conditions match middle-of-night conditions</li>
-        <li><strong>Long-term fix:</strong> independent sleep at bedtime automatically resolves most night waking</li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- Trouble: Early Rising -->
-  <div class="trouble-card fade-in">
-    <button class="trouble-toggle">
-      <span class="trouble-icon" style="background:rgba(255,208,122,.12);color:var(--gold)">&#9788;</span>
-      Early Rising (Before 6 AM)
-      <span class="chevron">&#9660;</span>
-    </button>
-    <div class="trouble-body">
-      <ul class="tip-list">
-        <li>Most common causes: bedtime too late (overtiredness paradox), room too bright, noise, too much daytime sleep</li>
-        <li><strong>First check:</strong> blackout blinds &mdash; light before 6 AM is a primary culprit</li>
-        <li>Try moving bedtime 15&ndash;30 minutes <strong>earlier</strong> &mdash; counterintuitive but often works</li>
-        <li>White noise masks morning household sounds</li>
-        <li>Do not rush in before 6 AM &mdash; give 10&ndash;15 minutes even if baby fusses</li>
-        <li>Do not feed before 6 AM if your goal is to shift wake time</li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- Trouble: Short Naps -->
-  <div class="trouble-card fade-in">
-    <button class="trouble-toggle">
-      <span class="trouble-icon" style="background:rgba(123,140,255,.12);color:var(--accent2)">&#9201;</span>
-      Short Naps (30&ndash;45 min)
-      <span class="chevron">&#9660;</span>
-    </button>
-    <div class="trouble-body">
-      <ul class="tip-list">
-        <li><strong>Under 4 months:</strong> normal architecture &mdash; one sleep cycle. Do not stress</li>
-        <li><strong>4&ndash;8 months:</strong> check wake windows &mdash; too short or too long both cause short naps</li>
-        <li>Ensure nap environment matches night: dark, white noise, sleep sack</li>
-        <li>Try to stretch: when baby wakes at 30 min, give 10 minutes before intervening</li>
-        <li>Nap extension: go in just BEFORE baby fully wakes at 25 min and resettle</li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- Trouble: Regressions -->
-  <div class="trouble-card fade-in">
-    <button class="trouble-toggle">
-      <span class="trouble-icon" style="background:rgba(255,176,122,.12);color:var(--warm)">&#8635;</span>
-      Sleep Regressions
-      <span class="chevron">&#9660;</span>
-    </button>
-    <div class="trouble-body">
-      <ul class="tip-list">
-        <li><strong>4 months:</strong> permanent architecture change &mdash; requires action</li>
-        <li><strong>6 months:</strong> developmental leaps &mdash; usually resolves in 2&ndash;4 weeks</li>
-        <li><strong>8&ndash;10 months:</strong> object permanence + motor development &mdash; 2&ndash;4 weeks</li>
-        <li><strong>12 months:</strong> nap transition + new mobility &mdash; 2&ndash;4 weeks</li>
-        <li>Hold firm on boundaries, offer extra comfort during the day, do not reintroduce weaned sleep props</li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- Trouble: Fighting Bedtime -->
-  <div class="trouble-card fade-in">
-    <button class="trouble-toggle">
-      <span class="trouble-icon" style="background:rgba(255,138,138,.12);color:var(--danger)">&#9888;</span>
-      Fighting Bedtime / Overtiredness
-      <span class="chevron">&#9660;</span>
-    </button>
-    <div class="trouble-body">
-      <ul class="tip-list">
-        <li><strong>Signs:</strong> rubbing eyes, arched back, fussiness that escalates, yawning, glazed look, sudden second wind</li>
-        <li><strong>Prevention:</strong> stick to age-appropriate wake windows religiously</li>
-        <li>If already overtired: use all 5 S's, keep room very dark, minimize stimulation</li>
-        <li>Move bedtime earlier &mdash; 6:30&ndash;7 PM is often ideal for ages 4&ndash;12 months</li>
-        <li>Bedtime should follow last nap by ~1.5&ndash;2 wake windows, not by the clock</li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- Trouble: Pacifier -->
-  <div class="trouble-card fade-in">
-    <button class="trouble-toggle">
-      <span class="trouble-icon" style="background:rgba(122,220,160,.12);color:var(--success)">&#9737;</span>
-      The Pacifier Problem (4&ndash;9 months)
-      <span class="chevron">&#9660;</span>
-    </button>
-    <div class="trouble-body">
-      <ul class="tip-list">
-        <li>Baby wakes multiple times wanting pacifier replaced &mdash; this is a learned sleep prop</li>
-        <li><strong>Option 1:</strong> teach baby to find and replace it &mdash; place multiple pacifiers in crib at 7+ months</li>
-        <li><strong>Option 2:</strong> remove pacifier entirely and sleep train without it</li>
-        <li>If removing: cold turkey is typically faster (3&ndash;5 nights) than gradual reduction</li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- Trouble: Teething -->
-  <div class="trouble-card fade-in">
-    <button class="trouble-toggle">
-      <span class="trouble-icon" style="background:rgba(196,160,255,.12);color:var(--accent)">&#9883;</span>
-      Teething vs. Habit-Based Waking
-      <span class="chevron">&#9660;</span>
-    </button>
-    <div class="trouble-body">
-      <ul class="tip-list">
-        <li><strong>True teething:</strong> brief, increased drooling, chewing, visible gum swelling, peaks for 2&ndash;3 days</li>
-        <li><strong>Habit-based:</strong> consistent pattern every night at same intervals, persists for weeks</li>
-        <li>Do not assume all waking is teething &mdash; most night waking in healthy infants is behavioral</li>
-        <li>Comfort during genuine teething: brief check-in, infant Tylenol/ibuprofen if severe (per pediatrician)</li>
-        <li>Resume normal sleep approach as soon as teething pain resolves</li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- Trouble: Post-Illness -->
-  <div class="trouble-card fade-in">
-    <button class="trouble-toggle">
-      <span class="trouble-icon" style="background:rgba(255,208,122,.12);color:var(--gold)">&#43;</span>
-      After Illness &mdash; Resetting Sleep
-      <span class="chevron">&#9660;</span>
-    </button>
-    <div class="trouble-body">
-      <ul class="tip-list">
-        <li>Provide extra comfort during illness &mdash; do not sleep train a sick baby</li>
-        <li>Resume normal sleep approach within 1&ndash;2 days of recovery</li>
-        <li>Some babies bounce back immediately; others need 3&ndash;5 nights of gentle re-training</li>
-        <li>Use the gentlest effective method &mdash; often a mini-version of original sleep training</li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- ═══ SECTION 5: QUICK REFERENCE ═══ -->
-  <div class="section" id="quick-ref">
-    <div class="section-header">
-      <div class="section-num">5</div>
-      <div class="section-title">Quick Reference</div>
-    </div>
-  </div>
-
-  <div class="qr-grid fade-in">
-    <!-- Safe Sleep -->
-    <div class="qr-card">
-      <h4>Safe Sleep ABC <span class="badge badge-safe">Critical</span></h4>
-      <div style="text-align:center;margin:16px 0">
-        <div style="font-size:28px;font-weight:800;color:#fff;letter-spacing:6px">A &middot; B &middot; C</div>
-        <div style="display:flex;justify-content:center;gap:20px;margin-top:8px;font-size:14px;color:var(--text-dim)">
-          <span><strong style="color:var(--success)">A</strong>lone</span>
-          <span><strong style="color:var(--success)">B</strong>ack</span>
-          <span><strong style="color:var(--success)">C</strong>rib</span>
-        </div>
-      </div>
-      <ul class="tip-list" style="font-size:13px">
-        <li><strong>Alone:</strong> no bed-sharing, no soft objects</li>
-        <li><strong>Back:</strong> always on back to sleep</li>
-        <li><strong>Crib:</strong> firm flat surface, no inclined sleepers, no positioners</li>
-      </ul>
-    </div>
-
-    <!-- Tired vs Overtired -->
-    <div class="qr-card">
-      <h4>Tired vs. Overtired <span class="badge badge-warn">Know This</span></h4>
-      <div class="compare-grid" style="margin-top:8px">
-        <div class="compare-col compare-good">
-          <h5>Just Tired &mdash; Put Down Now</h5>
-          <ul>
-            <li>Yawning</li>
-            <li>Slowing down</li>
-            <li>Less vocal</li>
-            <li>Staring</li>
-            <li>Rubbing eyes gently</li>
-          </ul>
-        </div>
-        <div class="compare-col compare-bad">
-          <h5>Overtired &mdash; Soothe First</h5>
-          <ul>
-            <li>Arching back</li>
-            <li>Inconsolable crying</li>
-            <li>Hyper-active second wind</li>
-            <li>Fist clenching</li>
-            <li>Eye rubbing + fussiness</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Bedtime Routine -->
-  <div class="card fade-in" style="margin-top:16px">
-    <h3>Bedtime Routine Template (15&ndash;30 min)</h3>
-    <div class="card-subtitle">Consistent sequence matters more than exact activities.</div>
-    <ol class="routine-steps" style="margin-top:20px">
-      <li>Bath (optional &mdash; every other night is fine)</li>
-      <li>Infant massage with lotion &mdash; 5&ndash;10 minutes</li>
-      <li>Pajamas and sleep sack</li>
-      <li>Feed (in dim light &mdash; avoid feeding to sleep after 4 months)</li>
-      <li>Short book or lullaby in dark room</li>
-      <li>White noise on, say consistent phrase (&ldquo;goodnight, I love you, sleep well&rdquo;)</li>
-      <li>Place in crib drowsy but awake</li>
-    </ol>
-  </div>
-
-  <!-- Emergency Protocol -->
-  <div class="card emergency-card fade-in" style="margin-top:16px">
-    <h4 style="font-size:18px;margin-bottom:16px">Emergency Soothing Protocol (Crying Baby)</h4>
-    <ol class="routine-steps">
-      <li>Check for immediate needs &mdash; hunger, dirty diaper, pain (gas, reflux)</li>
-      <li>Swaddle firmly if under 4 months</li>
-      <li>Activate all 5 S's simultaneously &mdash; do not go one at a time</li>
-      <li>Take baby outside or to a different room &mdash; change of environment can reset crying</li>
-      <li>If nothing works, put baby safely in crib and take a 5-minute break &mdash; <strong>it is okay, and you need to stay regulated</strong></li>
-    </ol>
-  </div>
-
-  <!-- Parental Wellbeing -->
-  <div class="callout fade-in" style="margin-top:16px">
-    <div class="callout-title">&#11088; A Note on Parental Wellbeing</div>
-    <p>Sleep deprivation impairs parental judgment, emotional regulation, and physical health at levels comparable to intoxication (Walker, <em>Why We Sleep</em>, 2017). <strong>Your sleep matters.</strong> A consistent sleep-trained baby is a gift to the whole family. Seeking help &mdash; sleep consultant, family support &mdash; is a sign of good parenting, not failure.</p>
-  </div>
-
-</div><!-- .container -->
-
-<!-- ═══ FOOTER ═══ -->
 <footer class="footer">
-  <div class="footer-sources">
-    Sources: The Happiest Baby on the Block (Dr. Harvey Karp) &middot; Precious Little Sleep (Alexis Dubief) &middot; Healthy Sleep Habits, Happy Child (Dr. Marc Weissbluth)<br>
-    Additional: AAP Safe Sleep Guidelines &middot; Hall et al. (2015) &middot; Price et al. (2012) &middot; Walker, Why We Sleep (2017)
-  </div>
-  <p>This guide is for informational purposes. Always consult your pediatrician.</p>
-  <p style="margin-top:12px">Made with <span class="footer-heart">&#9829;</span> for tired parents everywhere</p>
+  <p>Made with <span class="footer-heart">&#9829;</span> for tired parents everywhere</p>
+  <p style="margin-top:8px;opacity:.7">Informational only &mdash; always consult your pediatrician.</p>
 </footer>
 
 <script>
-// ── Expandable Blocks ──────────────────────────────────
-document.querySelectorAll('.expand-toggle').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const block = btn.closest('.expand-block');
-    block.classList.toggle('open');
-    btn.setAttribute('aria-expanded', block.classList.contains('open'));
-  });
-});
-
-// ── Troubleshooting Cards ──────────────────────────────
-document.querySelectorAll('.trouble-toggle').forEach(btn => {
-  btn.addEventListener('click', () => {
-    btn.closest('.trouble-card').classList.toggle('open');
-  });
-});
-
-// ── Age Picker ─────────────────────────────────────────
-document.querySelectorAll('.age-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.age-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    const target = document.getElementById(btn.dataset.target);
-    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  });
-});
-
-// Update active age button on scroll
-const ageCards = document.querySelectorAll('[id^="age-"]');
-const ageBtns  = document.querySelectorAll('.age-btn');
-const agePicker = document.querySelector('.age-picker');
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      ageBtns.forEach(b => b.classList.remove('active'));
-      const match = document.querySelector(`.age-btn[data-target="${entry.target.id}"]`);
-      if (match) {
-        match.classList.add('active');
-        // Only scroll the horizontal picker, not the page
-        const pickerRect = agePicker.getBoundingClientRect();
-        const btnRect = match.getBoundingClientRect();
-        const offset = btnRect.left - pickerRect.left - (pickerRect.width / 2) + (btnRect.width / 2);
-        agePicker.scrollBy({ left: offset, behavior: 'smooth' });
-      }
-    }
-  });
-}, { rootMargin: '-30% 0px -60% 0px', threshold: 0 });
-ageCards.forEach(card => observer.observe(card));
-
-// ── Scroll Fade-in ─────────────────────────────────────
 const fadeObserver = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
